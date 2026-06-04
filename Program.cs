@@ -24,6 +24,12 @@ namespace rps2
         // Максимально допустимая длина массива (защита от бесконечно долгого ввода)
         private const int MaxArrayLength = 100_000;
 
+        // Максимальное количество элементов подпоследовательности для вывода на экран
+        private const int MaxSubarrayDisplayLength = 20;
+
+        // Максимальное количество элементов массива для вывода на экран
+        private const int MaxArrayDisplayLength = 30;
+
         static void Main(string[] args)
         {
             PrintWelcome();
@@ -225,10 +231,9 @@ namespace rps2
                           $"(значение: {result.EndValue:F4})");
             sb.AppendLine($"Длина подпоследовательности: {result.EndIndex - result.StartIndex + 1}");
 
-            // Вывод самой подпоследовательности (до 20 элементов — не загромождать экран)
-            const int displayLimit = 20;
+            // Вывод самой подпоследовательности
             int subLen = result.EndIndex - result.StartIndex + 1;
-            if (subLen <= displayLimit)
+            if (subLen <= MaxSubarrayDisplayLength)
             {
                 sb.Append("Подпоследовательность      : [");
                 for (int i = result.StartIndex; i <= result.EndIndex; i++)
@@ -372,16 +377,15 @@ namespace rps2
         /// </summary>
         static void PrintArray(double[] array)
         {
-            const int displayLimit = 30;
             Console.Write("Массив: [");
-            int count = Math.Min(array.Length, displayLimit);
+            int count = Math.Min(array.Length, MaxArrayDisplayLength);
             for (int i = 0; i < count; i++)
             {
                 Console.Write(array[i].ToString("F4", CultureInfo.InvariantCulture));
                 if (i < count - 1) Console.Write(", ");
             }
-            if (array.Length > displayLimit)
-                Console.Write($", ... (+{array.Length - displayLimit} ещё)");
+            if (array.Length > MaxArrayDisplayLength)
+                Console.Write($", ... (+{array.Length - MaxArrayDisplayLength} ещё)");
             Console.WriteLine("]");
         }
 
